@@ -8,10 +8,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 @Entity
-public class Product implements Serializable{
+public class Product implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -22,9 +24,10 @@ public class Product implements Serializable{
 	private Double price;
 	private String imgurl;
 
-	@Transient
+	@ManyToMany
+	@JoinTable(name = "tb_product_category", joinColumns = @JoinColumn(name = "prodcut_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
 	private Set<Category> categories = new HashSet<>();
-	
+
 	public Product() {
 	}
 
@@ -105,5 +108,5 @@ public class Product implements Serializable{
 			return false;
 		return true;
 	}
-	
+
 }
